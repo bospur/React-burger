@@ -1,12 +1,12 @@
 import React from 'react';
-import { Tab, Box } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
 const CustomTab = () => {
     const [current, setCurrent] = React.useState('one');
     
   return (
-    <div style={{ display: 'flex' }} className="mb-10">
+    <div style={{ display: 'flex' }} >
       <Tab value="one" active={current === 'one'} onClick={setCurrent} >
         Булки
       </Tab>
