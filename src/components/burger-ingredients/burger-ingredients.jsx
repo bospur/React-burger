@@ -14,7 +14,7 @@ const BurgerIngredients = ({ data }) => {
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
             <CustomTab />
             
-            <section className={ingredientsStyles.ingredients + " mt-10"}>
+            <section className={ingredientsStyles.ingredients + " mt-10 custom-scroll"}>
                 <h2 className="text text_type_main-medium mb-6">Булки</h2>
                 <ul className={ingredientsStyles.cardList + " pr-4 pl-4"}>
                    {buns.map((bun) => (
@@ -23,7 +23,7 @@ const BurgerIngredients = ({ data }) => {
                 </ul>
             </section>
             
-            <section className={ingredientsStyles.ingredients + " mt-10"}>
+            <section className={ingredientsStyles.ingredients + " mt-10 custom-scroll"}>
                 <h2 className="text text_type_main-medium mb-6">Соусы</h2>
                 <ul className={ingredientsStyles.cardList + " pr-4 pl-4"}>
                     {sauces.map((sauce) => (
@@ -32,7 +32,7 @@ const BurgerIngredients = ({ data }) => {
                 </ul>
             </section>
 
-            <section className={ingredientsStyles.ingredients + " mt-10"}>
+            <section className={ingredientsStyles.ingredients + " mt-10 custom-scroll"}>
                 <h2 className="text text_type_main-medium mb-6">Начинки</h2>
                 <ul className={ingredientsStyles.cardList + " pr-4 pl-4"}>
                     {mains.map((main) => (
