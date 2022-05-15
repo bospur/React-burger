@@ -13,18 +13,19 @@ header {
     margin: 0 auto;
 }
 
-ul {
+.ul {
     display: flex;
     justify-content: space-between;
 }
 
-li {
+.li {
     display: flex;
 }
 
-li:hover {
+.li div:hover {
     cursor: pointer;
 }
+
 .row {
     display: flex;
 }

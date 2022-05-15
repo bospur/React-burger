@@ -1,0 +1,9 @@
+.ingredients {
+    max-height: 756px;
+    overflow-y: scroll;
+}
+
+.cardList {
+    display: flex;
+    flex-wrap: wrap;
+}

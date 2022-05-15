@@ -1,45 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-components';
 import CustomTab from '../../UI/custom-tab/custom-tab';
 import ingredientsStyles from './burger-ingredients.module.css';
-import IngredientCard from '../ingredient-card/ingredient-card';
+
+import IngredientsList from '../Ingredients-list/Ingredients-list';
 
 const BurgerIngredients = ({ data }) => {
-    const buns = data.filter(item => item.type == 'bun');
-    const mains = data.filter(item => item.type == 'main');
-    const sauces = data.filter(item => item.type == 'sauce');
+    const [ingredientsType, setIngredientsType] = useState('bun');
 
+    const tabListener = (value) => {
+        setIngredientsType(value)
+    };
+
+    const ingredients = data.filter((item) => item.type === ingredientsType);
+    
     return (
         <div className={ingredientsStyles.container + " pt-10"}>
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-            <CustomTab />
+            <CustomTab tabListener={tabListener}/>
+            <IngredientsList 
+                ingredients={ingredients}
+            />
             
-            <section className={ingredientsStyles.ingredients + " mt-10 custom-scroll"}>
-                <h2 className="text text_type_main-medium mb-6">Булки</h2>
-                <ul className={ingredientsStyles.cardList + " pr-4 pl-4"}>
-                   {buns.map((bun) => (
-                       <IngredientCard info={bun} />
-                   ))}
-                </ul>
-            </section>
-            
-            <section className={ingredientsStyles.ingredients + " mt-10 custom-scroll"}>
-                <h2 className="text text_type_main-medium mb-6">Соусы</h2>
-                <ul className={ingredientsStyles.cardList + " pr-4 pl-4"}>
-                    {sauces.map((sauce) => (
-                        <IngredientCard info={sauce} />
-                    ))}
-                </ul>
-            </section>
-
-            <section className={ingredientsStyles.ingredients + " mt-10 custom-scroll"}>
-                <h2 className="text text_type_main-medium mb-6">Начинки</h2>
-                <ul className={ingredientsStyles.cardList + " pr-4 pl-4"}>
-                    {mains.map((main) => (
-                        <IngredientCard info={main} />
-                    ))}
-                </ul>
-            </section>
         </div>
     );
 }

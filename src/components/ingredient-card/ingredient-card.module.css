@@ -3,6 +3,7 @@
     flex-direction: column;
     text-align: center;
     position: relative;
+    width: 42%;
 }
 
 .price {

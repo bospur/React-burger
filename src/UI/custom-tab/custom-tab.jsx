@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-const CustomTab = () => {
-    const [current, setCurrent] = React.useState('one');
+const CustomTab = ({ tabListener }) => {
+    const [current, setCurrent] = useState('bun');
     
+    const handler = (e) => {
+      setCurrent(e);
+      tabListener(e);
+    }
+
   return (
     <div style={{ display: 'flex' }} >
-      <Tab value="one" active={current === 'one'} onClick={setCurrent} >
+      <Tab value="bun" active={current === 'bun'} onClick={handler} >
         Булки
       </Tab>
-      <Tab value="two" active={current === 'two'} onClick={setCurrent} >
+      <Tab value="sauce" active={current === 'sauce'} onClick={handler} >
         Соусы
       </Tab>
-      <Tab value="three" active={current === 'three'} onClick={setCurrent} >
+      <Tab value="main" active={current === 'main'} onClick={handler} >
         Начинки
       </Tab>
     </div>
