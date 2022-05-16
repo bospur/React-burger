@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-components';
 import CustomTab from '../../UI/custom-tab/custom-tab';
 import ingredientsStyles from './burger-ingredients.module.css';
+import PropTypes from 'prop-types';
 
 import IngredientsList from '../Ingredients-list/Ingredients-list';
 
@@ -24,6 +25,18 @@ const BurgerIngredients = ({ data }) => {
             
         </div>
     );
+}
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.array,
+}
+
+CustomTab.propTypes = {
+    tabListener: PropTypes.func
+}
+
+IngredientsList.propTypes = {
+    ingredients: PropTypes.array
 }
 
 export default BurgerIngredients;
