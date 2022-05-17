@@ -22,16 +22,17 @@ header {
     display: flex;
 }
 
-.li div:hover {
-    cursor: pointer;
-}
-
 .row {
     display: flex;
+    
 }
 
 .logo {
     position: absolute;
     left: 42%;
     top: 16px;
+}
+
+a {
+    color: inherit;
 }

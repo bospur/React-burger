@@ -1,4 +1,14 @@
 .list {
     max-height: 45vh;
     overflow-y: scroll;
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px 0 0;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }

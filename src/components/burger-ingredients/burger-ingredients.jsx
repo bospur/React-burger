@@ -1,42 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-components';
-import CustomTab from '../../UI/custom-tab/custom-tab';
+import CustomTab from '../custom-tab/custom-tab';
 import ingredientsStyles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
-
 import IngredientsList from '../Ingredients-list/Ingredients-list';
+import { dataPropTypes } from '../../utils/data';
 
 const BurgerIngredients = ({ data }) => {
-    const [ingredientsType, setIngredientsType] = useState('bun');
-
-    const tabListener = (value) => {
-        setIngredientsType(value)
-    };
-
-    const ingredients = data.filter((item) => item.type === ingredientsType);
     
     return (
         <div className={ingredientsStyles.container + " pt-10"}>
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-            <CustomTab tabListener={tabListener}/>
-            <IngredientsList 
-                ingredients={ingredients}
-            />
-            
+            <CustomTab />
+            <div className={`${ingredientsStyles.row} custom-scroll`}>
+                <IngredientsList
+                    ingredients={
+                        data.filter(item => item.type === 'bun')
+                    }
+                />
+                <IngredientsList
+                    ingredients={
+                        data.filter(item => item.type === 'sauce')
+                    }
+                />
+                <IngredientsList
+                    ingredients={
+                        data.filter(item => item.type === 'main')
+                    }
+                />
+            </div>
         </div>
     );
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.array,
-}
-
-CustomTab.propTypes = {
-    tabListener: PropTypes.func
-}
-
-IngredientsList.propTypes = {
-    ingredients: PropTypes.array
+    data: PropTypes.arrayOf(dataPropTypes.isRequired)
 }
 
 export default BurgerIngredients;

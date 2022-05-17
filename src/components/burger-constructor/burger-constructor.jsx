@@ -2,6 +2,8 @@ import React from 'react';
 import { Typography, Box, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorList from '../constructor-list/constructor-list';
 import PropTypes from 'prop-types';
+import { dataPropTypes } from '../../utils/data';
+import constructorStyles from './burger-constructor.module.css';
 
 const BurgerConstructor = ({ data }) => {
     const bun = data.find((item) => item.type === 'bun');
@@ -9,32 +11,31 @@ const BurgerConstructor = ({ data }) => {
 
     return (
         <section className='pt-25 pb-25' >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end' }} className="pr-4 pl-4">
+            <div  className={constructorStyles.constructor}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${bun.name} (верх)`}
                     price={bun.price}
                     thumbnail={bun.image_mobile}
-                    
+                    className={constructorStyles.top}
                 />
-
                 <ConstructorList 
-                    data={data}
+                    data={data.filter(item => item.type !== 'bun')}
                 />
-
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
                     text={`${bun.name} (низ)`}
                     price={bun.price}
                     thumbnail={bun.image_mobile}
+                    className={constructorStyles.bottom}
                 />
             </div>
-            <div style={{ display: 'flex', alignItems:'center', justifyContent: 'flex-end', gap: '15px'}} className="mt-10 pr-4 pl-4">
-                <p className="text text_type_digits-medium mr-2" style={{ display: 'flex', alignItems:'center', gap: '5px'}}>
+            <div  className={`${constructorStyles.row} mt-10 pr-4 pl-4`}>
+                <p className={`${constructorStyles.price} text text_type_digits-medium mr-2`} >
                     {price}
-                    <CurrencyIcon type="primary" className="mr-10" style={{width: '36px', height: '36px'}} />
+                    <CurrencyIcon type="primary" className="mr-10" />
                 </p>
                 <Button type="primary" size="medium">
                         Оформить заказ
@@ -45,15 +46,7 @@ const BurgerConstructor = ({ data }) => {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array,
-};
-
-ConstructorElement.propTypes = {
-    type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    text: PropTypes.string,
-    price: PropTypes.number,
-    thumbnail: PropTypes.string
+    data: PropTypes.arrayOf(dataPropTypes.isRequired)
 }
 
 export default BurgerConstructor;

@@ -1,8 +1,6 @@
 import React from 'react';
 import card from './ingredient-card.module.css';
 import { Typography, Box, CurrencyIcon, Counter  } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-
 
 const IngredientCard = ({ info }) => {
     return (
@@ -16,18 +14,6 @@ const IngredientCard = ({ info }) => {
             <p className={card.name + " text text_type_main-default"}>{info.name}</p>
         </li>
     );
-}
-
-IngredientCard.propTypes = {
-    info: PropTypes.object,
-    image: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string
-}
-
-Counter.propTypes = {
-    count: PropTypes.number,
-    size: PropTypes.string
 }
 
 export default IngredientCard;
