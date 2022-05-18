@@ -1,6 +1,8 @@
 import React from 'react';
 import card from './ingredient-card.module.css';
 import { Typography, Box, CurrencyIcon, Counter  } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { dataPropTypes } from '../../utils/data';
 
 const IngredientCard = ({ info }) => {
     return (
@@ -14,6 +16,10 @@ const IngredientCard = ({ info }) => {
             <p className={card.name + " text text_type_main-default"}>{info.name}</p>
         </li>
     );
+}
+
+IngredientCard.propTypes = {
+    info: dataPropTypes.isRequired
 }
 
 export default IngredientCard;

@@ -1,6 +1,8 @@
 import React from 'react';
 import constructorListStyle from './constructor-list.module.css';
 import { Box, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { dataPropTypes } from '../../utils/data';
 
 const ConstructorList = ({ data }) => {
     
@@ -22,6 +24,10 @@ const ConstructorList = ({ data }) => {
             }
         </ul>
     );
+}
+
+ConstructorList.propTypes = {
+    data: PropTypes.arrayOf(dataPropTypes.isRequired)
 }
 
 export default ConstructorList;
