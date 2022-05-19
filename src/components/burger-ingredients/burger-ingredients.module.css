@@ -1,0 +1,7 @@
+.container {
+    max-width: 600px;
+}
+.row {
+    height: 55vh;
+    overflow-y: scroll;
+}
