@@ -3,10 +3,11 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import appStyles from './app.module.css';
-import { data } from '../../utils/data';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import styles from './app.module.css';
+import { BASE_URL } from '../../utils/constants';
 
 
 
@@ -14,23 +15,34 @@ function App() {
   const [isIngredientModal, setIsIngredientModal] = useState(false);
   const [isOrderModal, setIsOrderModal] = useState(false);
   const [ingredient, setIngredient] = useState();
-  const [ingredients, setIngredients] = useState([]);
-
-  const INGREDIENTS_DATA_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
-  const getIngredientsData = () => {
-    fetch(INGREDIENTS_DATA_URL)
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      }
-      return Promise.reject(`${response.status}`)
-    })
-    .then(response => {setIngredients(response.data)})
-    .catch((err) => {console.log(err)})
-  };
+  const [state, setState] = useState({
+    isLoad: true,
+    hasError: false,
+    ingredients: []
+  });
 
   useEffect(() => {
+    const getIngredientsData = () => {
+      fetch(`${BASE_URL}/ingredients`)
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          setState({
+            ingredients: [],
+            isLoad: false,
+            hasError: true
+          })
+          return Promise.reject(`${response.status}`)
+        }
+      })
+      .then(response => setState({
+        isLoad: false,
+        hasError: false,
+        ingredients: response.data
+      }))
+      .catch((err) => console.log(err))
+    };
     getIngredientsData();
   }, []);
   
@@ -57,16 +69,28 @@ function App() {
   return (
     <>
     <AppHeader />
-    <main className={appStyles.main}>
+    {
+      state.hasError && (
+        <p className={styles.error}>Ошибка загрузки данных...</p>
+      )
+    }
+    {
+      state.isLoad && (
+        <p className={styles.load}>Загрузка данных...</p>
+      )
+    }
+    {state.ingredients.length !== 0 && (
+      <main className={appStyles.main}>
       <BurgerIngredients 
-        data={ingredients}
+        data={state.ingredients}
         onOpen={handleIngredientModal}
       />
       <BurgerConstructor 
-        data={ingredients}
+        data={state.ingredients}
         onOpen={handleOrderModal}
       />
     </main>
+    )}
     {isIngredientModal && 
       <Modal
         onClose={closeIngredientModal}

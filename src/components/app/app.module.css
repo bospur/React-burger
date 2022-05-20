@@ -5,3 +5,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.load,
+.error {
+    margin: 0 auto;
+    font-size: 60px;
+}
