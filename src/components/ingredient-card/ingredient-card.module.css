@@ -4,6 +4,7 @@
     text-align: center;
     position: relative;
     width: 42%;
+    cursor: pointer;
 }
 
 .price {
