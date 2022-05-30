@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { dataPropTypes } from '../../utils/data';
 import constructorStyles from './burger-constructor.module.css';
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = ({ data, onOpen }) => {
     const bun = data.find((item) => item.type === 'bun');
     const price = data.reduce((sum, item) => sum += item.price, 0);
 
@@ -37,7 +37,7 @@ const BurgerConstructor = ({ data }) => {
                     {price}
                     <CurrencyIcon type="primary" className="mr-10" />
                 </p>
-                <Button type="primary" size="medium">
+                <Button type="primary" size="medium" onClick={onOpen}>
                         Оформить заказ
                 </Button>
             </div>
@@ -46,7 +46,8 @@ const BurgerConstructor = ({ data }) => {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes.isRequired)
+    data: PropTypes.arrayOf(dataPropTypes.isRequired),
+    onOpen: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

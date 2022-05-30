@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import IngredientsList from '../Ingredients-list/Ingredients-list';
 import { dataPropTypes } from '../../utils/data';
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({ data, onOpen }) => {
     
     return (
         <div className={ingredientsStyles.container + " pt-10"}>
@@ -17,16 +17,19 @@ const BurgerIngredients = ({ data }) => {
                     ingredients={
                         data.filter(item => item.type === 'bun')
                     }
+                    onOpen={onOpen}
                 />
                 <IngredientsList
                     ingredients={
                         data.filter(item => item.type === 'sauce')
                     }
+                    onOpen={onOpen}
                 />
                 <IngredientsList
                     ingredients={
                         data.filter(item => item.type === 'main')
                     }
+                    onOpen={onOpen}
                 />
             </div>
         </div>
@@ -34,7 +37,8 @@ const BurgerIngredients = ({ data }) => {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes.isRequired)
+    data: PropTypes.arrayOf(dataPropTypes.isRequired),
+    onOpen: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

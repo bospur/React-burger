@@ -4,9 +4,16 @@ import { Typography, Box, CurrencyIcon, Counter  } from '@ya.praktikum/react-dev
 import PropTypes from 'prop-types';
 import { dataPropTypes } from '../../utils/data';
 
-const IngredientCard = ({ info }) => {
+const IngredientCard = ({ info, onOpen }) => {
+
+    const clickCard = (value) => {
+         return () => {
+             onOpen(value)
+         }
+    };
+
     return (
-        <li className={card.card + " pr-4 pl-4 mb-8"} >
+        <li className={card.card + " pr-4 pl-4 mb-8"} onClick={clickCard(info)}  >
             <Counter count={1} size="default"  className={card.counter}/>
             <img src={info.image} alt=""  className={card.image + " mb-1"}/>
             <div className={card.price + " mb-1"}>
@@ -19,7 +26,8 @@ const IngredientCard = ({ info }) => {
 }
 
 IngredientCard.propTypes = {
-    info: dataPropTypes.isRequired
+    info: dataPropTypes.isRequired,
+    onOpen: PropTypes.func.isRequired
 }
 
 export default IngredientCard;
