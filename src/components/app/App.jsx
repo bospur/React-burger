@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, createContext, useReducer} from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -9,7 +9,7 @@ import OrderDetails from '../order-details/order-details';
 import styles from './app.module.css';
 import { BASE_URL } from '../../utils/constants';
 
-
+export const ConstructorContext = createContext();
 
 function App() {
   const [isIngredientModal, setIsIngredientModal] = useState(false);
@@ -20,7 +20,30 @@ function App() {
     hasError: false,
     ingredients: []
   });
+  const [constructor, dispatchConstructor] = useReducer(reduce, {
+    ingredients: [],
+    buns: {},
+  });
 
+  function  reduce(constructor, action) {
+    if (action.type === 'bun') {
+      return {
+        ...constructor,
+        bun: action 
+      }
+    }
+    if (Array.isArray(action)) {
+      return {
+        ...constructor,
+      ingredients: [...action]
+      }
+    }
+    return {
+      ...constructor,
+      ingredients: [...constructor.ingredients, {...action, constructorId: Date.now()}]
+    }
+
+  }
   useEffect(() => {
     const getIngredientsData = () => {
       fetch(`${BASE_URL}/ingredients`)
@@ -57,6 +80,7 @@ function App() {
   };
 
   const handleIngredientModal = (value) => {
+    dispatchConstructor(value)
     setIngredient(value);
     setIsIngredientModal(true);
   };
@@ -85,10 +109,9 @@ function App() {
         data={state.ingredients}
         onOpen={handleIngredientModal}
       />
-      <BurgerConstructor 
-        data={state.ingredients}
-        onOpen={handleOrderModal}
-      />
+      <ConstructorContext.Provider value={{constructor, dispatchConstructor, handleOrderModal}}>
+        <BurgerConstructor />
+      </ConstructorContext.Provider>
     </main>
     )}
     {isIngredientModal && 
@@ -99,11 +122,14 @@ function App() {
       </Modal> 
     }
     {isOrderModal && 
-          <Modal
+           <ConstructorContext.Provider value={{ constructor }}>
+           <Modal
             onClose={closeOrderModal}
           >
             <OrderDetails />
           </Modal> 
+         </ConstructorContext.Provider>
+          
         }
     </>
 
