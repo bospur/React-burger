@@ -9,7 +9,7 @@ const OrderDetails = () => {
     const [orderNumber, setOrderNumber] = useState('');
     const {constructor} = useContext(ConstructorContext);
     const data = {
-        ingredients : constructor.ingredients.map(item => item._id)
+        ingredients : [constructor.buns._id, ...constructor.ingredients.map(item => item._id)]
     };
 
     useEffect(() => {
@@ -24,13 +24,14 @@ const OrderDetails = () => {
         .then(res => res.json())
         .then(res => {
             setOrderNumber(res.order.number);
-            setIsloader(false)
+            setIsloader(false);
         })
     }, [])
 
     return (
         <div className={`${styles.row} mb-20 mt-20`}>
-            <h1 className='text text_type_digits-large mb-8'>{orderNumber}</h1>
+            {isLoader && <h1 className='text text_type_digits-large mb-8'>Формируем номер заказа..</h1>}
+            {!isLoader && <h1 className='text text_type_digits-large mb-8'>{orderNumber}</h1>}
             <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
             <div className={`${styles.icon} mb-15`}>
                 <CheckMarkIcon type="primary" />

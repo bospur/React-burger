@@ -6,7 +6,7 @@ import { dataPropTypes } from '../../utils/data';
 import { ConstructorContext } from '../app/App';
 
 const ConstructorList = ({ data }) => {
-    const { dispatchConstructor}  = useContext(ConstructorContext)
+    const { dispatchConstructor }  = useContext(ConstructorContext)
 
     const deleteIngredient = (id) => {
         const newIngredinets = data.filter(ingredient => ingredient.constructorId !== id);
