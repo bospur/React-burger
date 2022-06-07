@@ -4,15 +4,16 @@ import ConstructorList from '../constructor-list/constructor-list';
 import PropTypes from 'prop-types';
 import { dataPropTypes } from '../../utils/data';
 import constructorStyles from './burger-constructor.module.css';
-import { ConstructorContext } from '../app/App';
+import { ConstructorContext } from '../../contexts/constructor-context';
 
 const BurgerConstructor = () => {
-    const {constructor, handleOrderModal} = useContext(ConstructorContext);
+    const {constructor, handleOrderModal, sendOrder} = useContext(ConstructorContext);
     const bun = constructor.bun;
     const price = constructor.ingredients.reduce((sum, item) => sum += item.price, 0);
 
-    const onSubmit = () => {
-
+    const onClick = (e) => {
+        handleOrderModal(e);
+        sendOrder();
     }
 
     return (
@@ -54,7 +55,7 @@ const BurgerConstructor = () => {
                     {price + bun.price * 2}
                     <CurrencyIcon type="primary" className="mr-10" />
                 </p>
-                <Button type="primary" size="medium" onClick={handleOrderModal}>
+                <Button type="primary" size="medium" onClick={onClick}>
                         Оформить заказ
                 </Button>
             </div>

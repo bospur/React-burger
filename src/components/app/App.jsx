@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useReducer} from 'react';
+import React, { useState, useEffect, useReducer} from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -8,8 +8,10 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import styles from './app.module.css';
 import { BASE_URL } from '../../utils/constants';
+import { ConstructorContext } from '../../contexts/constructor-context';
+import { checkResponse } from '../api/api';
 
-export const ConstructorContext = createContext();
+
 
 function App() {
   const [isIngredientModal, setIsIngredientModal] = useState(false);
@@ -20,9 +22,9 @@ function App() {
     hasError: false,
     ingredients: []
   });
+  const [orderNumber, setOrderNumber] = useState()
   const [constructor, dispatchConstructor] = useReducer(reduce, {
     ingredients: [],
-    buns: {},
   });
 
   function  reduce(constructor, action) {
@@ -42,29 +44,44 @@ function App() {
       ...constructor,
       ingredients: [...constructor.ingredients, {...action, constructorId: Date.now()}]
     }
-
   }
+  
+  const sendOrder = () => {
+    const data = {
+      ingredients : [constructor.bun._id, ...constructor.ingredients.map(item => item._id)]
+    };
+
+    fetch(`${BASE_URL}/orders`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+      body : JSON.stringify(data) 
+    })
+    .then(checkResponse)
+    .then(res => {
+        setOrderNumber(res.order.number);
+    })
+    .catch(err => console.log(err))
+  }
+
   useEffect(() => {
     const getIngredientsData = () => {
       fetch(`${BASE_URL}/ingredients`)
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          setState({
-            ingredients: [],
-            isLoad: false,
-            hasError: true
-          })
-          return Promise.reject(`${response.status}`)
-        }
-      })
+      .then(checkResponse)
       .then(response => setState({
         isLoad: false,
         hasError: false,
         ingredients: response.data
       }))
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err);
+        setState({
+          ingredients: [],
+          isLoad: false,
+          hasError: true
+        })
+      })
     };
     getIngredientsData();
   }, []);
@@ -91,7 +108,7 @@ function App() {
   };
 
   return (
-    <>
+    <ConstructorContext.Provider value={{constructor, dispatchConstructor, handleOrderModal, sendOrder}}>
     <AppHeader />
     {
       state.hasError && (
@@ -109,9 +126,7 @@ function App() {
         data={state.ingredients}
         onOpen={handleIngredientModal}
       />
-      <ConstructorContext.Provider value={{constructor, dispatchConstructor, handleOrderModal}}>
         <BurgerConstructor />
-      </ConstructorContext.Provider>
     </main>
     )}
     {isIngredientModal && 
@@ -121,17 +136,14 @@ function App() {
         <IngredientDetails ingredient={ingredient} />
       </Modal> 
     }
-    {isOrderModal && 
-           <ConstructorContext.Provider value={{ constructor }}>
+    {isOrderModal && orderNumber &&
            <Modal
             onClose={closeOrderModal}
           >
-            <OrderDetails />
-          </Modal> 
-         </ConstructorContext.Provider>
-          
+            <OrderDetails orderNumber={orderNumber}/>
+          </Modal>          
         }
-    </>
+    </ConstructorContext.Provider>
 
     
   )

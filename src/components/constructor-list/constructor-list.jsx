@@ -3,7 +3,7 @@ import constructorListStyle from './constructor-list.module.css';
 import { Box, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { dataPropTypes } from '../../utils/data';
-import { ConstructorContext } from '../app/App';
+import { ConstructorContext } from '../../contexts/constructor-context';
 
 const ConstructorList = ({ data }) => {
     const { dispatchConstructor }  = useContext(ConstructorContext)
