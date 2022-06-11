@@ -13,8 +13,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { CLOSE_ORDER_MODAL } from '../../services/actions/order-details';
 import { CLOSE_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
 
-
-
 function App() {
   const { viewedIngredient, isIngredientModal } = useSelector(state => state.burgerIngredients);
   const { orderNumber, isOrderModal } = useSelector(state => state.orderDetails);

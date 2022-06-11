@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Typography, Box , Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import CustomTab from '../custom-tab/custom-tab';
 import ingredientsStyles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import IngredientsList from '../Ingredients-list/Ingredients-list';

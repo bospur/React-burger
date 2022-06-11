@@ -6,17 +6,10 @@ import { dataPropTypes } from '../../utils/data';
 import ConstructorListItem from '../constructor-list-item/constructor-list-item';
 
 const ConstructorList = ({ data }) => {
-         
-    
+
     return (
         <ul className={constructorListStyle.list + " custom-scroll"}>
-            {
-                data.map((item, i) =>  
-                    (
-                     <ConstructorListItem item={item} key={i} index={i}/>   
-                    )          
-                )
-            }
+            {data.map((item, i) => (<ConstructorListItem item={item} key={i} index={i}/>))}
         </ul>
     );
 }
