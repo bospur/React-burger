@@ -1,7 +1,7 @@
 import { GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, OPEN_ORDER_MODAL, CLOSE_ORDER_MODAL } from "../actions/order-details";
 
 const initialState = {
-    orderNumber: '',
+    orderNumber: null,
     orderRequest: false,
     orderFailed: false,
     isOrderModal: false
@@ -39,7 +39,8 @@ export const orderDetailsReduser = (state = initialState, action) => {
         case CLOSE_ORDER_MODAL: {
             return {
                 ...state,
-                isOrderModal: false
+                isOrderModal: false,
+                orderNumber: null
             }
         }
         default:
