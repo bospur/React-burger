@@ -1,23 +1,52 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Typography, Box, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorList from '../constructor-list/constructor-list';
-import PropTypes from 'prop-types';
-import { dataPropTypes } from '../../utils/data';
 import constructorStyles from './burger-constructor.module.css';
-import { ConstructorContext } from '../../contexts/constructor-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { OPEN_ORDER_MODAL } from '../../services/actions/order-details';
+import { getOrderNumber } from '../../services/actions/order-details';
+import { useDrop } from 'react-dnd';
+import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/burger-constructor';
 
 const BurgerConstructor = () => {
-    const {constructor, handleOrderModal, sendOrder} = useContext(ConstructorContext);
-    const bun = constructor.bun;
-    const price = constructor.ingredients.reduce((sum, item) => sum += item.price, 0);
+    const { ingredients, bun } = useSelector(state => state.burgerConstructor);
+    const price = ingredients.reduce((sum, item) => sum += item.price, 0);
+    const dispatch = useDispatch();
+    const data = {
+        ingredients: [bun._id, ...ingredients.map(item => item._id)]
+    }
+    const [{ isHover }, drop] = useDrop({
+        accept: "ingredient",
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+        drop(item) {
+            if (item.type == 'bun') {
+                dispatch({
+                    type: ADD_BUN,
+                    bun: item
+                })
+            } else {
+                dispatch({
+                    type: ADD_INGREDIENT,
+                    ingredient: {...item, constructorId: Date.now()}
+                })
+            }
+        },
+    })
 
-    const onClick = (e) => {
-        handleOrderModal(e);
-        sendOrder();
+    const handleClickOrderButton = (e) => {
+        e.preventDefault();
+        dispatch({
+            type: OPEN_ORDER_MODAL
+        })
+        dispatch(getOrderNumber(data))
     }
 
+    const sectionStyles = isHover ? {border: '1px solid #4c4cff'} : '';
+
     return (
-        <section className='pt-25 pb-25' >
+        <section className='pt-25 pb-25' ref={drop} styles={{sectionStyles}}>
             <div  className={constructorStyles.constructor}>
                 { bun && (
                     <ConstructorElement
@@ -27,12 +56,12 @@ const BurgerConstructor = () => {
                     price={bun.price}
                     thumbnail={bun.image_mobile}
                     className={constructorStyles.top}
-                />
-                ) || null
+                    />
+                )
                 }
                 {bun && 
                 <ConstructorList
-                    data={constructor.ingredients.filter(item => item.type !== 'bun')}
+                    data={ingredients}
                 /> || <p className="text text_type_main-large">
                         Добавте булку
                     </p>}
@@ -45,7 +74,7 @@ const BurgerConstructor = () => {
                     thumbnail={bun.image_mobile}
                     className={constructorStyles.bottom}
                 />
-                ) || null
+                )
                 }
             </div>
             {
@@ -55,7 +84,7 @@ const BurgerConstructor = () => {
                     {price + bun.price * 2}
                     <CurrencyIcon type="primary" className="mr-10" />
                 </p>
-                <Button type="primary" size="medium" onClick={onClick}>
+                <Button type="primary" size="medium" onClick={handleClickOrderButton}>
                         Оформить заказ
                 </Button>
             </div>

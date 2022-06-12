@@ -5,3 +5,6 @@
     height: 55vh;
     overflow-y: scroll;
 }
+.tabs {
+    display: flex;
+}

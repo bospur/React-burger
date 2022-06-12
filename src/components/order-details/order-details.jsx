@@ -1,9 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React from 'react';
 import styles from './order-details.module.css';
 import { Typography, Box, CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ConstructorContext } from '../../contexts/constructor-context';
-import { checkResponse } from '../api/api';
-import { BASE_URL } from '../../utils/constants';
 
 const OrderDetails = ({orderNumber}) => {    
 
