@@ -1,0 +1,22 @@
+.login {
+    padding: 50px 0;
+    width: 100%;
+    height: auto;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login fieldset {
+    border: none;
+}
+.login form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
+.link {
+    color: #4C4CFF;
+}
