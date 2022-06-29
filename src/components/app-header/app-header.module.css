@@ -37,3 +37,6 @@ header {
 a {
     color: inherit;
 }
+.active {
+    color: #F2F2F3;
+}

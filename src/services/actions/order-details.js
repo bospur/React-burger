@@ -1,4 +1,4 @@
-import { checkResponse, fetchOrder } from "../../components/api/api";
+import { checkResponse, fetchOrder } from "../../utils/api/api";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';

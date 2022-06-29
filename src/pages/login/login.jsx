@@ -2,6 +2,8 @@ import React, { useCallback, useState} from 'react';
 import cl from './login.module.css';
 import { Input, PasswordInput, Typography, Box, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequest } from '../../services/actions/auth';
 
 const Login = () => {
     const [form, setForm] = useState({
@@ -9,11 +11,13 @@ const Login = () => {
         password: ''
     });
     const historty = useHistory();
+    const dispatch = useDispatch();
+    const { isRegister } = useSelector(state => state.auth);
 
     const login = (e) => {
         e.preventDefault();
-
-        console.log(form)
+        dispatch(loginRequest(form))
+        
     };
 
     return (

@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import cl from './forgot-password.module.css';
-import { Input, PasswordInput, Typography, Box, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Input, Typography, Box, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { checkResponse, fetchPasswordForgot } from '../../utils/api/api';
 
 const ForgotPassword = () => {
     const [mail, setMail] = useState('');
+    const history = useHistory();
 
     const forgotPassword = (e) => {
         e.preventDefault();
+        fetchPasswordForgot(mail)
+        .then(checkResponse)
+        .then(res => {
+            if (res.success) {
+                history.replace({ pathname: '/reset-password'})
+            }
+        })
     }
 
     return (

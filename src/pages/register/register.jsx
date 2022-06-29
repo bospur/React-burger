@@ -1,7 +1,9 @@
-import React, { useCallback, useState} from 'react';
+import React, { useCallback, useEffect, useState} from 'react';
 import cl from './register.module.css';
 import { Input, PasswordInput, Typography, Box, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerRequest } from '../../services/actions/auth';
 
 const Register = () => {
     const [form, setForm] = useState({
@@ -9,17 +11,20 @@ const Register = () => {
         password: '',
         name: ''
     });
+    const dispatch = useDispatch();
+    const { isRegister } = useSelector(state => state.auth);
+
 
     const register = (e) => {
         e.preventDefault();
-        console.log(form)
+        dispatch(registerRequest(form))
         setForm({
             email: '',
             password: '',
             name: ''
         })
     }
-
+   
     return (
         <section className={cl.register}>
             <h1 className='text text_type_main-medium mb-6'>Регистрация</h1>

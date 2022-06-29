@@ -1,4 +1,4 @@
-import { checkResponse, fetchItems } from "../../components/api/api";
+import { checkResponse, fetchItems } from "../../utils/api/api";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
