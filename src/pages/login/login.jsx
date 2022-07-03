@@ -4,20 +4,27 @@ import { Input, PasswordInput, Typography, Box, Button } from '@ya.praktikum/rea
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../../services/actions/auth';
+import { useAuth } from '../../hooks/useAuth/useAuth';
 
 const Login = () => {
+    const { isAuth } = useAuth();
     const [form, setForm] = useState({
         email: '',
         password: ''
     });
-    const historty = useHistory();
+    const history = useHistory();
     const dispatch = useDispatch();
-    const { isRegister } = useSelector(state => state.auth);
 
     const login = (e) => {
         e.preventDefault();
         dispatch(loginRequest(form))
-        
+        setForm({
+            email: '',
+            password: '' 
+        })
+        history.replace({
+            pathname: '/'
+        })
     };
 
     return (

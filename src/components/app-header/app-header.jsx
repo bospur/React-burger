@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import headerStyles from './app-header.module.css';
 import { Typography, BurgerIcon, ListIcon, ProfileIcon, Box, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, NavLink, useRouteMatch } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth/useAuth';
 
 const AppHeader = () => {
-   
+   const  { isAuth , email } = useAuth();
+   const link = isAuth ? '/profile' : '/login';
     
     return (
         <header className={headerStyles.header}>
@@ -24,9 +26,9 @@ const AppHeader = () => {
                     <Logo />
                 </li>
                 <li className={headerStyles.li}>
-                    <NavLink to='/profile' className={headerStyles.row + " pl-5 pr-5 pb-4 pt-4 mr-2"}>
+                    <NavLink to={link} className={headerStyles.row + " pl-5 pr-5 pb-4 pt-4 mr-2"}>
                         <ProfileIcon type="secondary" />
-                            <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
+                            <p className="text text_type_main-default text_color_inactive ml-2">{isAuth ? email : 'Личный кабинет'}</p>
                     </NavLink>
                 </li>
             </ul>
