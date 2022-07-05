@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, Redirect, useRouteMatch } from "react-router-dom";
 import cl from "./profile.module.css";
 import {
   Input,
@@ -8,9 +8,10 @@ import {
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useAuth } from "../../hooks/useAuth/useAuth";
 
 const Profile = () => {
-  
+  const {isAuth} = useAuth();
   const [value, setValue] = useState({
     name: "",
     login: "",
@@ -33,7 +34,15 @@ const Profile = () => {
     setTimeout(() => passwordRef.current.focus(), 0)
   }
 
-
+  if (!isAuth) {
+    return (
+      <Redirect 
+      to={{
+        pathname: '/'
+      }}
+      />
+    )
+  }
   return (
     <section className={cl.profile}>
       <nav className={`${cl.menu} mr-15`}>
