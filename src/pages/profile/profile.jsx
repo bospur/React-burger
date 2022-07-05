@@ -9,12 +9,15 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAuth } from "../../hooks/useAuth/useAuth";
+import { getCookie } from "../../utils/utils";
+import { BASE_URL } from "../../utils/constants";
+import { fetchWithRefresh } from "../../utils/api/api";
 
 const Profile = () => {
-  const {isAuth} = useAuth();
+  const {isAuth, email, name} = useAuth();
   const [value, setValue] = useState({
-    name: "",
-    login: "",
+    name,
+    login: email,
     password: "",
   });
   const activeClass = cl.active;
@@ -33,6 +36,27 @@ const Profile = () => {
     e.preventDefault();
     setTimeout(() => passwordRef.current.focus(), 0)
   }
+  const saveUserInfo = (evt) => {
+    evt.preventDefault();
+    const token = getCookie('accessToken');
+    const options = {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+            // Отправляем токен и схему авторизации в заголовке при запросе данных
+      Authorization: `${token}`
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer'
+    }
+    const url = `${BASE_URL}/auth/user`;
+    fetchWithRefresh(url, options)
+    .then( res => console.log(res))
+  }
+  
 
   if (!isAuth) {
     return (
@@ -129,7 +153,7 @@ const Profile = () => {
             onIconClick={onIconPasswordClick}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={saveUserInfo}>
           Сохранить
         </Button>
       </div>

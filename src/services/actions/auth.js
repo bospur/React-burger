@@ -54,7 +54,7 @@ export function loginRequest(form) {
                     accessToken: res.accessToken,
                     refreshToken: res.refreshToken
                 })
-                setCookie('token', res.accessToken);
+                setCookie('accessToken', res.accessToken);
                 localStorage.setItem("refreshToken", res.refreshToken);
             } else {
                 dispatch({
