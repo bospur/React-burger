@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import cl from "./profile.module.css";
 import {
@@ -6,12 +6,33 @@ import {
   PasswordInput,
   Typography,
   Box,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Profile = () => {
-  const [value, setValue] = useState();
+  
+  const [value, setValue] = useState({
+    name: "",
+    login: "",
+    password: "",
+  });
   const activeClass = cl.active;
-  const { path } = useRouteMatch();
+  const nameRef = useRef();
+  const loginRef = useRef();
+  const passwordRef = useRef();
+  const onIconNameClick = (e) => {
+    e.preventDefault();
+    setTimeout(() => nameRef.current.focus(), 0)
+  }
+  const onIconLoginClick = (e) => {
+    e.preventDefault();
+    setTimeout(() => loginRef.current.focus(), 0)
+  }
+  const onIconPasswordClick = (e) => {
+    e.preventDefault();
+    setTimeout(() => passwordRef.current.focus(), 0)
+  }
+
 
   return (
     <section className={cl.profile}>
@@ -52,41 +73,56 @@ const Profile = () => {
           <Input
             type={"text"}
             placeholder={"Имя"}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) =>
+              setValue({ ...value, [e.target.name]: e.target.value })
+            }
             icon={"EditIcon"}
-            value={value}
+            value={value.name}
             name={"name"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
+            onIconClick={onIconNameClick}
+            ref={nameRef}
           />
         </div>
         <div className="mb-6">
           <Input
             type={"text"}
             placeholder={"Логин"}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) =>
+              setValue({ ...value, [e.target.name]: e.target.value })
+            }
             icon={"EditIcon"}
-            value={value}
-            name={"name"}
+            value={value.login}
+            name={"login"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
+            onIconClick={onIconLoginClick}
+            ref={loginRef}
           />
         </div>
         <div className="mb-6">
           <Input
-            type={"text"}
+            onChange={(e) =>
+              setValue({ ...value, [e.target.name]: e.target.value })
+            }
+            type={"password"}
             placeholder={"Пароль"}
-            onChange={(e) => setValue(e.target.value)}
-            icon={"EditIcon"}
-            value={value}
-            name={"name"}
+            name={"password"}
+            value={value.password}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
+            icon={"EditIcon"}
+            ref={passwordRef}
+            onIconClick={onIconPasswordClick}
           />
         </div>
+        <Button type="primary" size="medium">
+          Сохранить
+        </Button>
       </div>
     </section>
   );

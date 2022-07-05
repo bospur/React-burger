@@ -1,4 +1,5 @@
 import { checkResponse, fetchLoginRequest, fetchRegisterRequest } from "../../utils/api/api";
+import { setCookie } from "../../utils/utils";
 
 export const SEND_REGISTER_REQUEST = 'GET_AUTH_REQUEST';
 export const SEND_REGISTER_SUCCESS = 'GET_REGISTER_SUCCESS';
@@ -25,6 +26,8 @@ export function registerRequest(form) {
                     accessToken: res.accessToken,
                     refreshToken: res.refreshToken
                 })
+                setCookie('token', res.accessToken);
+                localStorage.setItem('refreshToken', res.refreshToken);
             } else {
                 dispatch({
                     type: SEND_REGISTER_FAILED
@@ -51,6 +54,8 @@ export function loginRequest(form) {
                     accessToken: res.accessToken,
                     refreshToken: res.refreshToken
                 })
+                setCookie('token', res.accessToken);
+                localStorage.setItem("refreshToken", res.refreshToken);
             } else {
                 dispatch({
                     type : SEND_LOGIN_FAILED
