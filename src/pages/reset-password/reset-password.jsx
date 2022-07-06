@@ -7,10 +7,12 @@ import {
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { checkResponse, fetchPasswordReset } from "../../utils/api/api";
+import { useAuth } from "../../hooks/useAuth/useAuth";
 
 const ResetPassword = () => {
+  const { isAuth } = useAuth();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const history = useHistory();
@@ -25,6 +27,17 @@ const ResetPassword = () => {
         }
       });
   };
+
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
+
   return (
     <section className={cl.reset}>
       <h1 className="text text_type_main-medium mb-6">Восстановление пароля</h1>

@@ -1,4 +1,4 @@
-import { checkResponse, fetchLoginRequest, fetchRegisterRequest } from "../../utils/api/api";
+import { checkResponse, fetchLoginRequest, fetchLogoutRequest, fetchRegisterRequest } from "../../utils/api/api";
 import { setCookie } from "../../utils/utils";
 
 export const SEND_REGISTER_REQUEST = 'GET_AUTH_REQUEST';
@@ -8,6 +8,8 @@ export const SEND_REGISTER_FAILED = 'GET_REGISTER_FAILED';
 export const SEND_LOGIN_REQUEST = 'SEND_LOGIN_REQUEST';
 export const SEND_LOGIN_SUCCESS = 'SEND_LOGIN_SUCCESS';
 export const SEND_LOGIN_FAILED = 'SEND_LOGIN_FAILED';
+
+export const LOGOUT = 'LOGOUT';
 
 export function registerRequest(form) {
     return function(dispatch) {
@@ -59,6 +61,20 @@ export function loginRequest(form) {
             } else {
                 dispatch({
                     type : SEND_LOGIN_FAILED
+                })
+            }
+        })
+    }
+}
+
+export function logoutRequest() {
+    return function(dispatch) {
+        fetchLogoutRequest()
+        .then(checkResponse)
+        .then(res => {
+            if (res.success) {
+                dispatch({
+                    type: LOGOUT
                 })
             }
         })

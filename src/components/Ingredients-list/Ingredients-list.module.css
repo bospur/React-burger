@@ -1,4 +1,9 @@
 .cardList {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+.cardList a {
+    display: block;
+    width: 45%;
 }

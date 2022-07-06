@@ -7,14 +7,13 @@ import {
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerRequest } from "../../services/actions/auth";
 import { useAuth } from "../../hooks/useAuth/useAuth";
 
 const Register = () => {
   const { isAuth } = useAuth();
-  const history = useHistory();
   const [form, setForm] = useState({
     email: "",
     password: "",

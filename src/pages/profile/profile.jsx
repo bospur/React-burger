@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Redirect, useRouteMatch } from "react-router-dom";
 import cl from "./profile.module.css";
 import {
@@ -12,18 +12,22 @@ import { useAuth } from "../../hooks/useAuth/useAuth";
 import { getCookie } from "../../utils/utils";
 import { BASE_URL } from "../../utils/constants";
 import { fetchWithRefresh } from "../../utils/api/api";
+import { useDispatch } from "react-redux";
+import { logoutRequest } from "../../services/actions/auth";
 
 const Profile = () => {
-  const {isAuth, email, name} = useAuth();
+  const {isAuth} = useAuth();
+  const dispatch = useDispatch();
   const [value, setValue] = useState({
-    name,
-    login: email,
-    password: "",
+    name: '',
+    login: '',
+    password: '',
   });
   const activeClass = cl.active;
   const nameRef = useRef();
   const loginRef = useRef();
   const passwordRef = useRef();
+
   const onIconNameClick = (e) => {
     e.preventDefault();
     setTimeout(() => nameRef.current.focus(), 0)
@@ -36,8 +40,13 @@ const Profile = () => {
     e.preventDefault();
     setTimeout(() => passwordRef.current.focus(), 0)
   }
-  const saveUserInfo = (evt) => {
+
+  const logout = (evt) => {
     evt.preventDefault();
+    dispatch(logoutRequest())
+  }
+
+  const getUserInfo = () => {
     const token = getCookie('accessToken');
     const options = {
       method: 'GET',
@@ -46,16 +55,37 @@ const Profile = () => {
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
-            // Отправляем токен и схему авторизации в заголовке при запросе данных
-      Authorization: `${token}`
+        Authorization: `${token}`
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer'
     }
     const url = `${BASE_URL}/auth/user`;
     fetchWithRefresh(url, options)
-    .then( res => console.log(res))
+    .then( res => setValue({...value, name: res.user.name, login: res.user.email}))
   }
+
+  const saveUserInfo = (evt) => {
+    evt.preventDefault();
+    const token = getCookie('accessToken');
+    const options = {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Authorization: `${token}`
+      },
+      body: JSON.stringify({
+        name: value.name,
+        email: value.login
+      })
+    }
+    const url = `${BASE_URL}/auth/user`;
+    fetchWithRefresh(url, options);
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  }, [])
   
 
   if (!isAuth) {
@@ -67,6 +97,7 @@ const Profile = () => {
       />
     )
   }
+
   return (
     <section className={cl.profile}>
       <nav className={`${cl.menu} mr-15`}>
@@ -92,6 +123,7 @@ const Profile = () => {
             <NavLink
               to="/profile/orders/:id"
               className="text text_type_main-medium"
+              onClick={logout}
             >
               Выход
             </NavLink>

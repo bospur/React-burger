@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ADD_VIEWED_INGREDIENT, OPEN_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
 import { useDrag } from 'react-dnd';
 
-const IngredientCard = ({ info }) => {
+const IngredientCard = ({ info, location }) => {
+    
     const { ingredients, bun } = useSelector(state => state.burgerConstructor)
     const dispacth = useDispatch();
     const [, dragRef] = useDrag({
@@ -28,6 +29,7 @@ const IngredientCard = ({ info }) => {
     }
 
     const clickCard = (value) => {
+        
          return () => {
             dispacth({
                  type: ADD_VIEWED_INGREDIENT,

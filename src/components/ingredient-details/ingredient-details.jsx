@@ -3,12 +3,20 @@ import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-compone
 import styles from './ingredient-details.module.css';
 import { dataPropTypes } from '../../utils/data';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
-const IngredientDetails = ({ ingredient }) => {
+const IngredientDetails = () => {
+    const { ingredients } = useSelector(state => state.burgerIngredients)
+    const { id } = useParams();
+    let ingredient;
+    ingredients.forEach(item => item._id === id ? ingredient = item : ingredient);
+    
+    if (ingredient) {
     return (
         <>
-          <h1 className='text text_type_main-large mb-5'>Детали ингредиента</h1>
+          <h1 className={`${styles.title} text text_type_main-large mb-5`}>Детали ингредиента</h1>
           <div className={styles.row}>
               <img src={ingredient.image_large} alt={ingredient.name} className={`${styles.image} mb-4`}/>
               <h2 className='text text_type_main-medium mb-8'>{ingredient.name}</h2>
@@ -32,7 +40,11 @@ const IngredientDetails = ({ ingredient }) => {
               </ul>
           </div> 
         </>
-    );
+    );}
+
+    return (
+        <></>
+    )
 }
 
 IngredientDetails.propTypes = {

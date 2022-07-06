@@ -7,19 +7,23 @@ import OrderDetails from '../order-details/order-details';
 import {  useDispatch, useSelector } from 'react-redux';
 import { CLOSE_ORDER_MODAL } from '../../services/actions/order-details';
 import { CLOSE_INGREDIENT_MODAL } from '../../services/actions/burger-ingredients';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import Home from '../../pages/home/home';
 import Login from '../../pages/login/login';
 import Register from '../../pages/register/register';
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import ResetPassword from '../../pages/reset-password/reset-password';
 import Profile from '../../pages/profile/profile';
+import ProtectedRoute from '../protected-route/protected-route';
 
 
 function App() {
   const { viewedIngredient, isIngredientModal } = useSelector(state => state.burgerIngredients);
   const { orderNumber, isOrderModal } = useSelector(state => state.orderDetails);
   const dispatch = useDispatch();
+  const location = useLocation();
+  let background = location.state && location.state.background;
+  
   
   const closeIngredientModal = () => {
     dispatch({
@@ -52,17 +56,20 @@ function App() {
       <Route path='/reset-password' exact>
         <ResetPassword />
       </Route>
-      <Route path='/profile' exact>
-        <Profile />
+      <Route path='/ingredients/:id' exact>
+       <IngredientDetails />
       </Route>
+      <ProtectedRoute path='/profile'>
+        <Profile/>
+      </ProtectedRoute>
     </Switch>
 
 
-    {isIngredientModal && 
+    {/* {isIngredientModal && 
       <Modal onClose={closeIngredientModal}>
         <IngredientDetails ingredient={viewedIngredient} />
       </Modal> 
-    }
+    } */}
     {isOrderModal && orderNumber &&
       <Modal onClose={closeOrderModal}>
         <OrderDetails orderNumber={orderNumber}/>
