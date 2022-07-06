@@ -5,7 +5,7 @@ import { Typography, Box, CheckMarkIcon } from '@ya.praktikum/react-developer-bu
 const OrderDetails = ({orderNumber}) => {    
 
     return (
-        <div className={`${styles.row} mb-20 mt-20`}>
+        <div className={`${styles.row} mt-20`}>
             <h1 className='text text_type_digits-large mb-8'>{orderNumber}</h1>
             <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
             <div className={`${styles.icon} mb-15`}>

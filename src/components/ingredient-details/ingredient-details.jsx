@@ -1,8 +1,6 @@
 import React from 'react';
 import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-details.module.css';
-import { dataPropTypes } from '../../utils/data';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -47,8 +45,5 @@ const IngredientDetails = () => {
     )
 }
 
-IngredientDetails.propTypes = {
-    ingredient: dataPropTypes.isRequired
-}
 
 export default IngredientDetails;
