@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cl from './forgot-password.module.css';
 import { Input, Typography, Box, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { checkResponse, fetchPasswordForgot } from '../../utils/api/api';
 import { useAuth } from '../../hooks/useAuth/useAuth';
 
@@ -9,6 +9,7 @@ const ForgotPassword = () => {
     const {isAuth} = useAuth();
     const [mail, setMail] = useState('');
     const history = useHistory();
+    const location = useLocation();
 
     const forgotPassword = (e) => {
         e.preventDefault();
@@ -16,9 +17,10 @@ const ForgotPassword = () => {
         .then(checkResponse)
         .then(res => {
             if (res.success) {
-                history.replace({ pathname: '/reset-password'})
+                history.replace({ pathname: '/reset-password', state: {from: location}})
             }
         })
+        
     }
     if (isAuth) {
         return (

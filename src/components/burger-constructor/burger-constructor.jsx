@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ORDER_MODAL } from '../../services/actions/order-details';
 import { getOrderNumber } from '../../services/actions/order-details';
 import { useDrop } from 'react-dnd';
-import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/burger-constructor';
+import { ADD_BUN, ADD_INGREDIENT, CLEAR_CONSTRUCTOR } from '../../services/actions/burger-constructor';
 import { useAuth } from '../../hooks/useAuth/useAuth';
 import { useHistory } from 'react-router-dom';
 
@@ -46,6 +46,9 @@ const BurgerConstructor = () => {
                 type: OPEN_ORDER_MODAL
             })
             dispatch(getOrderNumber(data))
+            dispatch({
+                type: CLEAR_CONSTRUCTOR
+            })
         } else {
             history.replace({ pathname: '/login'})
         }

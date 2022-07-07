@@ -7,7 +7,7 @@ import {
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { checkResponse, fetchPasswordReset } from "../../utils/api/api";
 import { useAuth } from "../../hooks/useAuth/useAuth";
 
@@ -16,6 +16,7 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const history = useHistory();
+  const location = useLocation();
 
   const resetPassword = (e) => {
     e.preventDefault();
@@ -27,8 +28,8 @@ const ResetPassword = () => {
         }
       });
   };
-
-  if (isAuth) {
+  
+  if (location?.state?.from.pathname !== '/forgot-password') {
     return (
       <Redirect
         to={{
@@ -41,7 +42,7 @@ const ResetPassword = () => {
   return (
     <section className={cl.reset}>
       <h1 className="text text_type_main-medium mb-6">Восстановление пароля</h1>
-      <form onSubmit={resetPassword}>
+      <form onSubmit={resetPassword} className={cl.form}>
         <div className="mb-6">
           <Input
             onChange={(e) => setPassword(e.target.value)}
