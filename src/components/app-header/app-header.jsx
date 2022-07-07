@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import headerStyles from './app-header.module.css';
 import { Typography, BurgerIcon, ListIcon, ProfileIcon, Box, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, useHistory, useRouteMatch } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth/useAuth';
 
 const AppHeader = () => {
@@ -10,6 +10,7 @@ const AppHeader = () => {
    const isConstructor = !!useRouteMatch({ path: '/', exact: true});
    const isFeed = !!useRouteMatch('/feed');
    const isProfile = !!useRouteMatch('/profile');
+   const history = useHistory();
     
     return (
         <header className={headerStyles.header}>
@@ -29,7 +30,7 @@ const AppHeader = () => {
                         ml-2`}>Лента заказов</p>
                     </NavLink>
                 </li>
-                <li className={headerStyles.logo}>
+                <li className={headerStyles.logo} onClick={() => { history.replace({pathname: '/'})}}>
                     <Logo />
                 </li>
                 <li className={headerStyles.li}>

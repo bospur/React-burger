@@ -41,33 +41,35 @@ const ResetPassword = () => {
   return (
     <section className={cl.reset}>
       <h1 className="text text_type_main-medium mb-6">Восстановление пароля</h1>
-      <div className="mb-6">
-        <Input
-          onChange={(e) => setPassword(e.target.value)}
-          type={"text"}
-          placeholder={"Введите новый пароль"}
-          name={"mail"}
-          value={password}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-        />
-      </div>
-      <div className="mb-6">
-        <Input
-          onChange={(e) => setToken(e.target.value)}
-          type={"text"}
-          placeholder={"Введите код из письма"}
-          name={"mail"}
-          value={token}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-        />
-      </div>
-      <Button type="primary" size="medium" onClick={resetPassword}>
-        Сохранить
-      </Button>
+      <form onSubmit={resetPassword}>
+        <div className="mb-6">
+          <Input
+            onChange={(e) => setPassword(e.target.value)}
+            type={"text"}
+            placeholder={"Введите новый пароль"}
+            name={"mail"}
+            value={password}
+            error={false}
+            errorText={"Ошибка"}
+            size={"default"}
+          />
+        </div>
+        <div className="mb-6">
+          <Input
+            onChange={(e) => setToken(e.target.value)}
+            type={"text"}
+            placeholder={"Введите код из письма"}
+            name={"mail"}
+            value={token}
+            error={false}
+            errorText={"Ошибка"}
+            size={"default"}
+          />
+        </div>
+        <Button type="primary" size="medium">
+          Сохранить
+        </Button>
+      </form>
 
       <p className="text text_type_main-default text_color_inactive mt-20">
         Вспомнили пароль?{" "}

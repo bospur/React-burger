@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
 
 const IngredientDetails = () => {
@@ -10,6 +11,12 @@ const IngredientDetails = () => {
     const { id } = useParams();
     let ingredient;
     ingredients.forEach(item => item._id === id ? ingredient = item : ingredient);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [dispatch])
     
     if (ingredient) {
     return (

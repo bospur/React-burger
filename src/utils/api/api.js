@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants";
-import { setCookie } from "../utils";
+import { setCookie, getCookie } from "../utils";
 
 export const checkResponse = (res) => {
   if (res.ok) {
@@ -120,4 +120,39 @@ export const fetchWithRefresh = async (url, options) => {
       return Promise.reject(err);
     }
   }
+};
+
+export const getUserInfo = () => {
+  const token = getCookie('accessToken');
+  const options = {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'
+  }
+  const url = `${BASE_URL}/auth/user`;
+  return fetchWithRefresh(url, options);
+}
+
+export const saveUserInfo = (value) => {
+  const token = getCookie("accessToken");
+  const options = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: `${token}`,
+    },
+    body: JSON.stringify({
+      name: value.name,
+      email: value.login,
+    }),
+  };
+  const url = `${BASE_URL}/auth/user`;
+  return fetchWithRefresh(url, options);
 };

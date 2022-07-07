@@ -1,4 +1,4 @@
-import { LOGOUT, SEND_LOGIN_FAILED, SEND_LOGIN_REQUEST, SEND_LOGIN_SUCCESS, SEND_REGISTER_FAILED, SEND_REGISTER_REQUEST, SEND_REGISTER_SUCCESS } from "../actions/auth";
+import { LOGOUT, SEND_LOGIN_FAILED, SEND_LOGIN_REQUEST, SEND_LOGIN_SUCCESS, SEND_REGISTER_FAILED, SEND_REGISTER_REQUEST, SEND_REGISTER_SUCCESS, SET_USER } from "../actions/auth";
 
 const initialState = {
     isRegister: false,
@@ -71,6 +71,14 @@ export const authReducer = (state = initialState, action) => {
                 user: {
                     name: null,
                     email: null
+                }
+            }
+        }
+        case SET_USER: {
+            return {
+                ...state,
+                user: {
+                    ...action.user
                 }
             }
         }

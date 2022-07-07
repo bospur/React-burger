@@ -12,7 +12,20 @@
 }
 
 .modal {
+    position: relative;
     background-color: #1c1c21;
     padding: 30px;
     border-radius: 20px;
+}
+.close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: .3s ease-in;
+}
+.close:hover {
+    transform: rotate(90deg);
 }

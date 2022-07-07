@@ -1,5 +1,5 @@
 import { checkResponse, fetchLoginRequest, fetchLogoutRequest, fetchRegisterRequest } from "../../utils/api/api";
-import { setCookie } from "../../utils/utils";
+import { deleteCookie, setCookie } from "../../utils/utils";
 
 export const SEND_REGISTER_REQUEST = 'GET_AUTH_REQUEST';
 export const SEND_REGISTER_SUCCESS = 'GET_REGISTER_SUCCESS';
@@ -10,6 +10,8 @@ export const SEND_LOGIN_SUCCESS = 'SEND_LOGIN_SUCCESS';
 export const SEND_LOGIN_FAILED = 'SEND_LOGIN_FAILED';
 
 export const LOGOUT = 'LOGOUT';
+
+export const SET_USER = 'SET_USER';
 
 export function registerRequest(form) {
     return function(dispatch) {
@@ -36,6 +38,7 @@ export function registerRequest(form) {
                 })
             }
         })
+        .catch(err => console.log(err))
     }
 }
 
@@ -64,6 +67,7 @@ export function loginRequest(form) {
                 })
             }
         })
+        .catch(err => console.log(err))
     }
 }
 
@@ -76,7 +80,9 @@ export function logoutRequest() {
                 dispatch({
                     type: LOGOUT
                 })
+                deleteCookie('accessToken')
             }
         })
+        .catch(err => console.log(err))
     }
 }

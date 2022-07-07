@@ -1,27 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NavLink, Redirect, useRouteMatch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import cl from "./profile.module.css";
 import {
   Input,
-  PasswordInput,
   Typography,
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useAuth } from "../../hooks/useAuth/useAuth";
-import { getCookie } from "../../utils/utils";
-import { BASE_URL } from "../../utils/constants";
-import { fetchWithRefresh } from "../../utils/api/api";
+import {  getUserInfo, saveUserInfo } from "../../utils/api/api";
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/auth";
 
 const Profile = () => {
-  const {isAuth} = useAuth();
   const dispatch = useDispatch();
   const [value, setValue] = useState({
-    name: '',
-    login: '',
-    password: '',
+    name: "",
+    login: "",
+    password: "",
   });
   const activeClass = cl.active;
   const nameRef = useRef();
@@ -30,73 +25,35 @@ const Profile = () => {
 
   const onIconNameClick = (e) => {
     e.preventDefault();
-    setTimeout(() => nameRef.current.focus(), 0)
-  }
+    setTimeout(() => nameRef.current.focus(), 0);
+  };
   const onIconLoginClick = (e) => {
     e.preventDefault();
-    setTimeout(() => loginRef.current.focus(), 0)
-  }
+    setTimeout(() => loginRef.current.focus(), 0);
+  };
   const onIconPasswordClick = (e) => {
     e.preventDefault();
-    setTimeout(() => passwordRef.current.focus(), 0)
-  }
+    setTimeout(() => passwordRef.current.focus(), 0);
+  };
 
   const logout = (evt) => {
     evt.preventDefault();
-    dispatch(logoutRequest())
-  }
+    dispatch(logoutRequest());
+  };
 
-  const getUserInfo = () => {
-    const token = getCookie('accessToken');
-    const options = {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `${token}`
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer'
-    }
-    const url = `${BASE_URL}/auth/user`;
-    fetchWithRefresh(url, options)
-    .then( res => setValue({...value, name: res.user.name, login: res.user.email}))
-  }
-
-  const saveUserInfo = (evt) => {
+  const onSubmit = (evt) => {
     evt.preventDefault();
-    const token = getCookie('accessToken');
-    const options = {
-      method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        Authorization: `${token}`
-      },
-      body: JSON.stringify({
-        name: value.name,
-        email: value.login
-      })
-    }
-    const url = `${BASE_URL}/auth/user`;
-    fetchWithRefresh(url, options);
+    saveUserInfo(value)
+    .catch((err) => console.log(err));
   }
 
   useEffect(() => {
-    getUserInfo();
-  }, [])
-  
-
-  if (!isAuth) {
-    return (
-      <Redirect 
-      to={{
-        pathname: '/'
-      }}
-      />
-    )
-  }
+    getUserInfo()
+      .then((res) =>
+        setValue({ ...value, name: res.user.name, login: res.user.email })
+      )
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <section className={cl.profile}>
@@ -133,7 +90,7 @@ const Profile = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <div className={cl.userInfo}>
+      <form onSubmit={onSubmit} className={cl.userInfo}>
         <div className="mb-6">
           <Input
             type={"text"}
@@ -185,10 +142,10 @@ const Profile = () => {
             onIconClick={onIconPasswordClick}
           />
         </div>
-        <Button type="primary" size="medium" onClick={saveUserInfo}>
+        <Button type="primary" size="medium">
           Сохранить
         </Button>
-      </div>
+      </form>
     </section>
   );
 };

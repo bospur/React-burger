@@ -7,7 +7,7 @@ import {
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../services/actions/auth";
 import { useAuth } from "../../hooks/useAuth/useAuth";
@@ -19,6 +19,7 @@ const Login = () => {
     password: "",
   });
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const login = (e) => {
     e.preventDefault();
@@ -32,9 +33,7 @@ const Login = () => {
   if (isAuth) {
     return (
       <Redirect
-        to={{
-          pathname: "/",
-        }}
+        to={ location.state?.from || '/' }
       />
     );
   }
@@ -42,38 +41,40 @@ const Login = () => {
   return (
     <section className={cl.login}>
       <h1 className="text text_type_main-medium mb-6">Вход</h1>
-      <div className="mb-6">
-        <Input
-          onChange={(e) =>
-            setForm({ ...form, [e.target.name]: e.target.value })
-          }
-          type={"text"}
-          placeholder={"E-mail"}
-          name={"email"}
-          value={form.email}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-        />
-      </div>
-      <div className="mb-6">
-        <PasswordInput
-          onChange={(e) =>
-            setForm({ ...form, [e.target.name]: e.target.value })
-          }
-          type={"text"}
-          placeholder={"Пароль"}
-          name={"password"}
-          value={form.password}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-          icon={"ShowIcon"}
-        />
-      </div>
-      <Button type="primary" size="medium" onClick={login}>
-        Войти
-      </Button>
+      <form onSubmit={login}>
+        <div className="mb-6">
+          <Input
+            onChange={(e) =>
+              setForm({ ...form, [e.target.name]: e.target.value })
+            }
+            type={"text"}
+            placeholder={"E-mail"}
+            name={"email"}
+            value={form.email}
+            error={false}
+            errorText={"Ошибка"}
+            size={"default"}
+          />
+        </div>
+        <div className="mb-6">
+          <PasswordInput
+            onChange={(e) =>
+              setForm({ ...form, [e.target.name]: e.target.value })
+            }
+            type={"text"}
+            placeholder={"Пароль"}
+            name={"password"}
+            value={form.password}
+            error={false}
+            errorText={"Ошибка"}
+            size={"default"}
+            icon={"ShowIcon"}
+          />
+        </div>
+        <Button type="primary" size="medium">
+          Войти
+        </Button>
+      </form>
       <p className="text text_type_main-default text_color_inactive mt-20">
         Вы — новый пользователь?{" "}
         <Link to={{ pathname: "/register" }} className={cl.link}>
