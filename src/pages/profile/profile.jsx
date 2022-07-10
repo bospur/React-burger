@@ -61,7 +61,7 @@ const Profile = () => {
         });
       })
       .catch((err) => console.log(err));
-  }, [value]);
+  }, []);
 
   return (
     <section className={cl.profile}>

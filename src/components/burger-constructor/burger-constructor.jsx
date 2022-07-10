@@ -30,11 +30,13 @@ const BurgerConstructor = () => {
                     type: ADD_BUN,
                     bun: item
                 })
+                console.log('булка')
             } else {
                 dispatch({
                     type: ADD_INGREDIENT,
                     ingredient: {...item, constructorId: Date.now()}
                 })
+                console.log('начинка')
             }
         },
     })
