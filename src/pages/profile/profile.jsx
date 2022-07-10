@@ -7,11 +7,14 @@ import {
   Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {  getUserInfo, saveUserInfo } from "../../utils/api/api";
+import { getUserInfo, saveUserInfo } from "../../utils/api/api";
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/auth";
+import { getCookie } from "../../utils/utils";
+import { SET_USER } from "../../services/actions/auth";
 
 const Profile = () => {
+  const token = getCookie("accessToken");
   const dispatch = useDispatch();
   const [value, setValue] = useState({
     name: "",
@@ -43,17 +46,22 @@ const Profile = () => {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    saveUserInfo(value)
-    .catch((err) => console.log(err));
-  }
+    saveUserInfo(value).catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getUserInfo()
-      .then((res) =>
-        setValue({ ...value, name: res.user.name, login: res.user.email })
-      )
+      .then((res) => {
+        setValue({ ...value, name: res.user.name, login: res.user.email });
+        dispatch({
+          type: SET_USER,
+          user: {
+            ...res.user,
+          },
+        });
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [value]);
 
   return (
     <section className={cl.profile}>
