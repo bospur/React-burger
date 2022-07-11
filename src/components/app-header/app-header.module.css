@@ -29,10 +29,15 @@ header {
 
 .logo {
     position: absolute;
-    left: 42%;
+    left: 50%;
+    transform:translate(-50%, 0);
     top: 16px;
+    cursor: pointer;
 }
 
 a {
     color: inherit;
+}
+.active {
+    color: #F2F2F3;
 }

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { useInView } from "react-intersection-observer";
 
+
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
     const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(state => state.burgerIngredients);

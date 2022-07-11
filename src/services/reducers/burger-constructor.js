@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, ADD_BUN, DELETE_INGREDIENT, SORT_INGREDIENTS } from "../actions/burger-constructor";
+import { ADD_INGREDIENT, ADD_BUN, DELETE_INGREDIENT, SORT_INGREDIENTS, CLEAR_CONSTRUCTOR } from "../actions/burger-constructor";
 
 const initialState = {
     ingredients: [],
@@ -29,6 +29,13 @@ export const burgerConstructoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: action.ingredients
+            }
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...state,
+                bun: '',
+                ingredients: []
             }
         }
         default:

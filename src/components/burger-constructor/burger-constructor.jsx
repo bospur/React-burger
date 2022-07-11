@@ -6,9 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ORDER_MODAL } from '../../services/actions/order-details';
 import { getOrderNumber } from '../../services/actions/order-details';
 import { useDrop } from 'react-dnd';
-import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/burger-constructor';
+import { ADD_BUN, ADD_INGREDIENT, CLEAR_CONSTRUCTOR } from '../../services/actions/burger-constructor';
+import { useAuth } from '../../hooks/useAuth/useAuth';
+import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
+    const { isAuth } = useAuth();
+    const history = useHistory();
     const { ingredients, bun } = useSelector(state => state.burgerConstructor);
     const price = ingredients.reduce((sum, item) => sum += item.price, 0);
     const dispatch = useDispatch();
@@ -26,21 +30,30 @@ const BurgerConstructor = () => {
                     type: ADD_BUN,
                     bun: item
                 })
+                console.log('булка')
             } else {
                 dispatch({
                     type: ADD_INGREDIENT,
                     ingredient: {...item, constructorId: Date.now()}
                 })
+                console.log('начинка')
             }
         },
     })
 
     const handleClickOrderButton = (e) => {
         e.preventDefault();
-        dispatch({
-            type: OPEN_ORDER_MODAL
-        })
-        dispatch(getOrderNumber(data))
+        if (isAuth) {
+            dispatch({
+                type: OPEN_ORDER_MODAL
+            })
+            dispatch(getOrderNumber(data))
+            dispatch({
+                type: CLEAR_CONSTRUCTOR
+            })
+        } else {
+            history.replace({ pathname: '/login'})
+        }
     }
 
     const sectionStyles = isHover ? {border: '1px solid #4c4cff'} : '';

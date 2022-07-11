@@ -23,3 +23,6 @@ ul {
   padding: 0;
   text-decoration: none;
 }
+#root {
+  height: 100vh;
+}
