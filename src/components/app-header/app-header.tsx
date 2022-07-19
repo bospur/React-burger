@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import headerStyles from './app-header.module.css';
-import { Typography, BurgerIcon, ListIcon, ProfileIcon, Box, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerIcon, ListIcon, ProfileIcon,  Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useHistory, useRouteMatch } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth/useAuth';
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
    const  { isAuth , email } = useAuth();
    const link = isAuth ? '/profile' : '/login';
    const isConstructor = !!useRouteMatch({ path: '/', exact: true});

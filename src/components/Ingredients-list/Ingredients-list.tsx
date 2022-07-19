@@ -1,15 +1,16 @@
-import React from 'react';
-import { Typography, Box } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { FC } from 'react';
+import { } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsListStyle from './Ingredients-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import PropTypes from 'prop-types';
-import { dataPropTypes } from '../../utils/data';
+import { Idata, IdataArray } from '../../utils/type';
 import { Link, useLocation } from 'react-router-dom';
+interface ITypesName {
+    [index: string]: string;
+}
 
-
-const IngredientsList = ({ ingredients }) => {
+const IngredientsList: FC<IdataArray> = ({ ingredients }) => {
     const location = useLocation();
-    const TYPES_NAME = {
+    const TYPES_NAME: ITypesName = {
         bun: 'Булки',
         main: 'Начинка',
         sauce: 'Соусы'
@@ -33,10 +34,6 @@ const IngredientsList = ({ ingredients }) => {
                     </ul>
         </section>
     );
-}
-
-IngredientsList.propTypes = {
-    ingredients: PropTypes.arrayOf(dataPropTypes.isRequired),
 }
 
 export default IngredientsList;

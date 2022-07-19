@@ -16,16 +16,15 @@ import ProtectedRoute from "../protected-route/protected-route";
 import IngredientModal from "../ingredient-modal/ingredient-modal";
 import { getUserInfo } from "../../utils/api/api";
 import { SET_USER } from "../../services/actions/auth";
-import { useAuth } from "../../hooks/useAuth/useAuth";
 import { getCookie } from "../../utils/utils";
 
 function App() {
   const token = getCookie('accessToken');
   const { orderNumber, isOrderModal } = useSelector(
-    (state) => state.orderDetails
+    (state: any) => state.orderDetails
   );
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location : any = useLocation();
   const background = location.state && location.state.background;
 
   const closeOrderModal = () => {

@@ -1,11 +1,17 @@
+import { Idata, IdataArray } from "../../utils/type";
 import { ADD_INGREDIENT, ADD_BUN, DELETE_INGREDIENT, SORT_INGREDIENTS, CLEAR_CONSTRUCTOR } from "../actions/burger-constructor";
 
-const initialState = {
+export interface IConstructor {
+    ingredients?: IdataArray | any;
+    bun?: string;
+}
+
+const initialState:IConstructor = {
     ingredients: [],
     bun: ''
 }
 
-export const burgerConstructoReducer = (state = initialState, action) => {
+export const burgerConstructoReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case ADD_INGREDIENT: {
             return {
@@ -22,7 +28,7 @@ export const burgerConstructoReducer = (state = initialState, action) => {
         case DELETE_INGREDIENT: {
             return {
                 ...state,
-                ingredients: state.ingredients.filter(item => item.constructorId !== action.id)
+                ingredients: state.ingredients.filter((item: Idata) => item.constructorId !== action.id)
             }
         }
         case SORT_INGREDIENTS: {

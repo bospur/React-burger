@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import cl from "./ingredient-modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const IngredientModal = () => {
+const IngredientModal: FC = () => {
   const history = useHistory();
 
-  const goBack = (e) => {
+  const goBack = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     history.goBack();
   };
-  const onClose = (e) => {
+  const onClose = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     history.goBack();
   };
 
-  const hendleCloseModal = (evt) => {
-    evt.preventDefault();
+  const hendleCloseModal = (e: { preventDefault: () => void; key: string; }) => {
+    e.preventDefault();
 
-    if (evt.key === "Escape") {
+    if (e.key === "Escape") {
         history.goBack();
     }
   };
