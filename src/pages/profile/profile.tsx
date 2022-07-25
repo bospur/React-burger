@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FormEvent, MouseEventHandler, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import cl from "./profile.module.css";
 import {
   Input,
-  Typography,
-  Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getUserInfo, saveUserInfo } from "../../utils/api/api";
@@ -22,30 +20,26 @@ const Profile = () => {
     password: "",
   });
   const activeClass = cl.active;
-  const nameRef = useRef();
-  const loginRef = useRef();
-  const passwordRef = useRef();
+  const nameRef = useRef() as any;
+  const loginRef = useRef() as any;
+  const passwordRef = useRef() as any;
 
-  const onIconNameClick = (e) => {
-    e.preventDefault();
+  const onIconNameClick = () => {
     setTimeout(() => nameRef.current.focus(), 0);
   };
-  const onIconLoginClick = (e) => {
-    e.preventDefault();
+  const onIconLoginClick = () => {
     setTimeout(() => loginRef.current.focus(), 0);
   };
-  const onIconPasswordClick = (e) => {
-    e.preventDefault();
+  const onIconPasswordClick = () => {
     setTimeout(() => passwordRef.current.focus(), 0);
   };
 
-  const logout = (evt) => {
-    evt.preventDefault();
-    dispatch(logoutRequest());
+  const logout = () => {
+    dispatch(logoutRequest() as any);
   };
 
-  const onSubmit = (evt) => {
-    evt.preventDefault();
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
     saveUserInfo(value).catch((err) => console.log(err));
   };
 

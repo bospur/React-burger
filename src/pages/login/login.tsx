@@ -1,35 +1,33 @@
-import React, { useCallback, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import cl from "./login.module.css";
 import {
   Input,
   PasswordInput,
-  Typography,
-  Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { loginRequest } from "../../services/actions/auth";
 import { useAuth } from "../../hooks/useAuth/useAuth";
 
-const Login = () => {
+const Login: FC = () => {
   const { isAuth } = useAuth();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation() as any;
 
-  const login = (e) => {
+  const login = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(loginRequest(form));
+    dispatch(loginRequest(form) as any);
     setForm({
       email: "",
       password: "",
     });
   };
-
+  
   if (isAuth) {
     return (
       <Redirect
@@ -61,14 +59,9 @@ const Login = () => {
             onChange={(e) =>
               setForm({ ...form, [e.target.name]: e.target.value })
             }
-            type={"text"}
-            placeholder={"Пароль"}
             name={"password"}
             value={form.password}
-            error={false}
-            errorText={"Ошибка"}
             size={"default"}
-            icon={"ShowIcon"}
           />
         </div>
         <Button type="primary" size="medium">

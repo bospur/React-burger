@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { checkResponse, fetchLoginRequest, fetchLogoutRequest, fetchRegisterRequest } from "../../utils/api/api";
 import { deleteCookie, setCookie } from "../../utils/utils";
 
@@ -13,8 +14,14 @@ export const LOGOUT = 'LOGOUT';
 
 export const SET_USER = 'SET_USER';
 
-export function registerRequest(form) {
-    return function(dispatch) {
+interface IForm {
+    email: string;
+    password: string;
+    name?: string;
+}
+
+export function registerRequest(form : IForm) {
+    return function(dispatch: Dispatch) {
         dispatch({
             type: SEND_REGISTER_REQUEST
         })
@@ -42,8 +49,8 @@ export function registerRequest(form) {
     }
 }
 
-export function loginRequest(form) {
-    return function(dispatch) {
+export function loginRequest(form: IForm) {
+    return function(dispatch: Dispatch) {
         dispatch({
             type: SEND_LOGIN_REQUEST
         })
@@ -72,7 +79,7 @@ export function loginRequest(form) {
 }
 
 export function logoutRequest() {
-    return function(dispatch) {
+    return function(dispatch: Dispatch) {
         fetchLogoutRequest()
         .then(checkResponse)
         .then(res => {

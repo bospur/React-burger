@@ -11,3 +11,9 @@
 .link {
     color: #4C4CFF;
 }
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsListStyle from './Ingredients-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { Idata, IdataArray } from '../../utils/type';
+import { IdataArray } from '../../utils/type';
 import { Link, useLocation } from 'react-router-dom';
 interface ITypesName {
     [index: string]: string;

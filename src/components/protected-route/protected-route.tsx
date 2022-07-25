@@ -1,8 +1,13 @@
-import React from "react";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import React, { FC } from "react";
+import { ReactNode } from "react";
+import { Redirect, Route} from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth/useAuth";
 
-const ProtectedRoute = ({ children, ...rest }) => {
+interface IProtected {
+  children: ReactNode;
+  path: string;
+}
+const ProtectedRoute: FC<IProtected> = ({ children, ...rest }) => {
     const {isAuth} = useAuth();
     
 

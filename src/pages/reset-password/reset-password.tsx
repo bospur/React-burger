@@ -1,24 +1,20 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import cl from "./reset-password.module.css";
 import {
   Input,
   PasswordInput,
-  Typography,
-  Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { checkResponse, fetchPasswordReset } from "../../utils/api/api";
-import { useAuth } from "../../hooks/useAuth/useAuth";
 
 const ResetPassword = () => {
-  const { isAuth } = useAuth();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation() as any;
 
-  const resetPassword = (e) => {
+  const resetPassword = (e: FormEvent) => {
     e.preventDefault();
     fetchPasswordReset(password, token)
       .then(checkResponse)

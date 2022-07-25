@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import cl from './forgot-password.module.css';
-import { Input, Typography, Box, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { checkResponse, fetchPasswordForgot } from '../../utils/api/api';
 import { useAuth } from '../../hooks/useAuth/useAuth';
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
     const {isAuth} = useAuth();
     const [mail, setMail] = useState('');
     const history = useHistory();
     const location = useLocation();
 
-    const forgotPassword = (e) => {
+    const forgotPassword = (e: FormEvent) => {
         e.preventDefault();
         fetchPasswordForgot(mail)
         .then(checkResponse)

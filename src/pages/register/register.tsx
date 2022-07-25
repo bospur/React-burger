@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import cl from "./register.module.css";
 import {
   Input,
   PasswordInput,
-  Typography,
-  Box,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
@@ -21,9 +19,9 @@ const Register = () => {
   });
   const dispatch = useDispatch();
 
-  const register = (e) => {
+  const register = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(registerRequest(form));
+    dispatch(registerRequest(form) as any);
     setForm({
       email: "",
       password: "",
@@ -43,6 +41,7 @@ const Register = () => {
   return (
     <section className={cl.register}>
       <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
+      <form onSubmit={register}>
       <div className="mb-6">
         <Input
           onChange={(e) =>
@@ -76,19 +75,15 @@ const Register = () => {
           onChange={(e) =>
             setForm({ ...form, [e.target.name]: e.target.value })
           }
-          type={"text"}
-          placeholder={"Пароль"}
           name={"password"}
           value={form.password}
-          error={false}
-          errorText={"Ошибка"}
           size={"default"}
-          icon={"ShowIcon"}
         />
       </div>
-      <Button type="primary" size="medium" onClick={register}>
+      <Button type="primary" size="medium" >
         Зарегистрироваться
       </Button>
+      </form>
       <p className="text text_type_main-default text_color_inactive mt-20">
         Уже зарегистрированы?{" "}
         <Link to={{ pathname: "/login" }} className={cl.link}>

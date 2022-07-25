@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './order-details.module.css';
-import { Typography, Box, CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const OrderDetails = ({orderNumber}) => {    
+interface IOrderDetails {
+    orderNumber: number;
+}
+
+const OrderDetails: FC<IOrderDetails> = ({orderNumber}) => {    
 
     return (
         <div className={`${styles.row} mt-20`}>
