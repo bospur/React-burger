@@ -13,7 +13,7 @@ interface IModal {
 }
 
 const Modal: FC<IModal> = ({ children, onClose }) => {
-  const hendleCloseModal = (e: { preventDefault: () => void; key: string }) => {
+  const hendleCloseModal = (e: KeyboardEvent) => {
     e.preventDefault();
 
     if (e.key === "Escape") {

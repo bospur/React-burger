@@ -1,21 +1,16 @@
 import React, { FC } from "react";
 import { ReactNode } from "react";
-import { Redirect, Route} from "react-router-dom";
+import { Redirect, Route, RouteProps} from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth/useAuth";
 
-interface IProtected {
-  children: ReactNode;
-  path: string;
-}
-const ProtectedRoute: FC<IProtected> = ({ children, ...rest }) => {
+const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
     const {isAuth} = useAuth();
-    
 
   return (
     <Route
         {...rest}
         render={({ location }) => 
-            isAuth ? (children) : ( <Redirect to={{ pathname: "/login", state: { from: location } }} /> )
+            isAuth ? (children) : ( <Redirect to={{ pathname: "/login", state: { from: location } }} /> ) as any
         }
     />
   );
