@@ -7,7 +7,7 @@ const initialState = {
     isOrderModal: false
 }
 
-export const orderDetailsReduser = (state = initialState, action) => {
+export const orderDetailsReduser = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_ORDER_REQUEST: {
             return {

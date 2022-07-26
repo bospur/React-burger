@@ -15,7 +15,7 @@ const initialState = {
     isIngredientModal: false
 }
 
-export const burgersIngredientsReducer = (state = initialState, action) => {
+export const burgersIngredientsReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {

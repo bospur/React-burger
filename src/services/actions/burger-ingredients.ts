@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { checkResponse, fetchItems } from "../../utils/api/api";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -10,7 +11,7 @@ export const OPEN_INGREDIENT_MODAL = 'OPEN_INGREDIENT_MODAL';
 export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
 
 export function getIngredients() {
-    return function(dispatch) {
+    return function(dispatch: Dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
           });

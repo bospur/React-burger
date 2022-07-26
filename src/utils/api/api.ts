@@ -1,7 +1,20 @@
 import { BASE_URL } from "../constants";
 import { setCookie, getCookie } from "../utils";
 
-export const checkResponse = (res) => {
+interface IOrderData {
+  ingredients: string[];
+}
+interface IForm {
+  email: string;
+  password: string;
+  name?: string;
+}
+interface IUserInfo {
+  login: string;
+  name: string;
+}
+
+export const checkResponse = (res: any) => {
   if (res.ok) {
     return res.json();
   }
@@ -12,7 +25,7 @@ export const fetchItems = async () => {
   return await fetch(`${BASE_URL}/ingredients`);
 };
 
-export const fetchOrder = async (data) => {
+export const fetchOrder = async (data: IOrderData) => {
   return await fetch(`${BASE_URL}/orders`, {
     method: "POST",
     headers: {
@@ -22,7 +35,7 @@ export const fetchOrder = async (data) => {
   });
 };
 
-export const fetchPasswordForgot = async (email) => {
+export const fetchPasswordForgot = async (email: string) => {
   return await fetch(`${BASE_URL}/password-reset`, {
     method: "POST",
     headers: {
@@ -34,7 +47,7 @@ export const fetchPasswordForgot = async (email) => {
   });
 };
 
-export const fetchPasswordReset = async (password, token) => {
+export const fetchPasswordReset = async (password: string, token: string) => {
   return await fetch(`${BASE_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -59,7 +72,7 @@ export const fetchLogoutRequest = async () => {
   })
 }
 
-export const fetchRegisterRequest = async (form) => {
+export const fetchRegisterRequest = async (form: IForm) => {
   return await fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     mode: "cors",
@@ -74,7 +87,7 @@ export const fetchRegisterRequest = async (form) => {
   });
 };
 
-export const fetchLoginRequest = async (form) => {
+export const fetchLoginRequest = async (form: IForm) => {
   return await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     mode: "cors",
@@ -101,11 +114,11 @@ export const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: any) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
@@ -140,7 +153,7 @@ export const getUserInfo = () => {
   return fetchWithRefresh(url, options);
 }
 
-export const saveUserInfo = (value) => {
+export const saveUserInfo = (value: IUserInfo) => {
   const token = getCookie("accessToken");
   const options = {
     method: "PATCH",
